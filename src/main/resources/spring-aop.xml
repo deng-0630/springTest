@@ -7,4 +7,18 @@
     <context:component-scan base-package="com.bdqn.test"></context:component-scan>
 <!--    让切面注解生效  -->
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+    <bean class="com.bdqn.test.CaculateImpl" id="caculateImpl"></bean>
+    <bean class="com.bdqn.test.CaculateAspect1" id="caculateAspect1"></bean>
+    <aop:config>
+        <aop:pointcut id="aaa" expression="execution(* *com.bdqn.test.CaculateImpl.*(..))"/>
+<!--        引用切面类的实例-->
+        <aop:aspect ref="caculateAspect1" order="3">
+            <aop:before method="addMethod" pointcut-ref="aaa"></aop:before>
+            <aop:after method="afterMethod" pointcut-ref="aaa"></aop:after>
+            <aop:after-returning method="afterreturnMethod" pointcut-ref="aaa" returning="param"></aop:after-returning>
+            <aop:after-throwing method="afterthrowingMethod" throwing="ex" pointcut-ref="aaa"></aop:after-throwing>
+            <aop:around method="aroundMethod" pointcut-ref="aaa"></aop:around>
+        </aop:aspect>
+    </aop:config>
 </beans>

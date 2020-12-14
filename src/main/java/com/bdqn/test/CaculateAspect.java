@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 
+
 @Aspect
 @Component
 public class CaculateAspect {
@@ -46,16 +47,17 @@ public class CaculateAspect {
     public Object aroundMethod(ProceedingJoinPoint pjp){
         String mname=pjp.getSignature().getName();
         Object[] args=pjp.getArgs();
+        Object result=null;
         try {
             //前置通知
-            pjp.proceed();
+            result=pjp.proceed();
             //返回通知
         } catch (Throwable throwable) {
             //异常通知
         }finally {
             //后置通知
         }
-        return 100;
+        return result;
     }
 
 }

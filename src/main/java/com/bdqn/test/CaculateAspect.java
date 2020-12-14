@@ -1,6 +1,7 @@
 package com.bdqn.test;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -38,6 +39,14 @@ public class CaculateAspect {
         String mname=joinPoint.getSignature().getName();
         Object[] args=joinPoint.getArgs();
         System.out.println(String.format("异常通知：方法名：%s，参数列表：%s,异常信息是：%s",mname, Arrays.asList(args),ex));
+    }
+
+    //环绕通知可以获取方法抛出的异常,可以指定特定的异常类型
+    @Around("execution(* *com.bdqn.test.CaculateImpl.*(..))")
+    public Object aroundMethod(ProceedingJoinPoint pjp){
+        String mname=pjp.getSignature().getName();
+        Object[] args=pjp.getArgs();
+        return 100;
     }
 
 }
